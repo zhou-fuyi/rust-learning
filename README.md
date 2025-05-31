@@ -175,7 +175,7 @@ Rust 的单元测试一般放在和被测代码相同的文件中，使用条件
 - 父模块中的项不能使用子模块中的私有项（private）
 - 但子模块中的项可以使用祖先模块中的项（哪怕是私有的）
 - 使用 pub 关键字可以使其变为 public
-- 相对路径可以使用 self、super 关键字 
+- 相对路径可以使用 self、super 关键字
 - pub use -> 重新导出
 
 > 将代码组织成更小，更易管理的代码单元的方法。类似ES中的模块化的感觉
@@ -200,7 +200,17 @@ export RUSTUP_UPDATE_ROOT=https://mirrors.sjtug.sjtu.edu.cn/rust-static/rustup
 
 rust国内安装必备环境配置[未验证]
 
-## 所有权
+## 类型系统
+
+![alt text](image.png)
+
+## 所有权&生命周期
+
+![alt text](image-1.png)
+
+![alt text](image-2.png)
+
+![alt text](image-3.png)
 
 所有权：是确保Rust程序安全的一种机制
 
@@ -268,8 +278,12 @@ Rust是在借用检查器里使用RWO等权限
 
 - Tuple Struct -> 字段没有名
 
-  ``` struct Color(i32, i32, i32); ```  
+  ``` struct Color(i32, i32, i32); ```
 
 - Unit-Like Struct（无字段 Struct）
 
-  ``` struct AlwaysEqual {}; -> struct AlwaysEqual; ``` 
+  ``` struct AlwaysEqual {}; -> struct AlwaysEqual; ```
+
+## 泛型&Trait
+
+![alt text](image-4.png)
