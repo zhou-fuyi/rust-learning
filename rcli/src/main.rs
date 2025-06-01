@@ -1,6 +1,6 @@
 use clap::Parser;
 // rcli csv -i input.csv -o output.json --header -d ','
-use rcli::{process_csv, Opts, SubCommand};
+use rcli::{process_csv, process_genpass, Opts, SubCommand};
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -31,6 +31,13 @@ fn main() -> anyhow::Result<()> {
                 format!("output.{}", opts.format)
             };
             process_csv(&opts.input, output, opts.format)?
+        },
+        SubCommand::GenPass(opts) => {
+            // Here you would call the function to generate passwords
+            // For now, we just print the options
+            println!("Generating passwords options: {:?}", opts);
+
+            process_genpass(opts.length, opts.uppercase, opts.lowercase, opts.number, opts.symbol)?;
         },
     }
     Ok(())
