@@ -1,6 +1,6 @@
 use clap::Parser;
 // rcli csv -i input.csv -o output.json --header -d ','
-use rcli::{process_csv, process_decode, process_encode, process_generate, process_genpass, process_sign, process_verify, Base64SubCommand, Opts, SubCommand, TextSignFormat, TextSubCommand};
+use rcli::{process_csv, process_decode, process_encode, process_generate, process_genpass, process_http_serve, process_sign, process_verify, Base64SubCommand, HttpSubCommand, Opts, SubCommand, TextSignFormat, TextSubCommand};
 use serde::{Serialize, Deserialize};
 use zxcvbn::zxcvbn;
 
@@ -19,8 +19,9 @@ struct Player {
     kit: u8
 }
 
-
-fn main() -> anyhow::Result<()> {
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
+    tracing_subscriber::fmt().init();
     // println!("Hello, world!");
     let opts = Opts::parse();
     match opts.cmd {
@@ -85,6 +86,14 @@ fn main() -> anyhow::Result<()> {
                     }
                 },
             }
+        },
+        SubCommand::Http(cmd) => match cmd {
+            HttpSubCommand::Serve(opts) => {
+                // Here you would call the function to start the HTTP server
+                // For now, we just print the options
+                println!("Starting HTTP server with options: {:?}", opts);
+                process_http_serve(&opts.dir, opts.port).await?;
+            },
         },
     }
     Ok(())
