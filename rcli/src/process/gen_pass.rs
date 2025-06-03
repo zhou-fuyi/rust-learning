@@ -1,5 +1,4 @@
-use rand::seq::{IndexedRandom, SliceRandom};
-use zxcvbn::zxcvbn;
+use rand::{seq::SliceRandom, thread_rng};
 
 const UPPER: &[u8] = b"ABCDEFGHJKLMNOPQRSTUVWXYZ";
 const LOWER: &[u8] = b"abcdefghijkmnpqrstuvwxyz";
@@ -12,9 +11,9 @@ const SYMBOL: &[u8] = b"!@#$%^&*-_";
 /// 构建一个密码生成器
 /// 密码强度检测：zxcvbn crate
 
-pub fn process_genpass(length: u8, upper: bool, lower: bool, number: bool, symbol: bool) -> anyhow::Result<()> {
+pub fn process_genpass(length: u8, upper: bool, lower: bool, number: bool, symbol: bool) -> anyhow::Result<String> {
 
-    let mut rng = rand::rng();
+    let mut rng = thread_rng();
     let mut password = Vec::new();
     let mut chars = Vec::new();
 
@@ -50,10 +49,5 @@ pub fn process_genpass(length: u8, upper: bool, lower: bool, number: bool, symbo
 
     let password = String::from_utf8(password)?;
 
-    println!("Generated password: {}", password);
-
-    let estimate = zxcvbn(&password, &[]);
-    eprintln!("Password strength: {:?}", estimate.score());
-
-    Ok(())
+    Ok(password)
 }
