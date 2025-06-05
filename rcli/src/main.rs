@@ -92,7 +92,7 @@ async fn main() -> anyhow::Result<()> {
                 // Here you would call the function to start the HTTP server
                 // For now, we just print the options
                 println!("Starting HTTP server with options: {:?}", opts);
-                process_http_serve(&opts.dir, opts.port).await?;
+                process_http_serve(opts.dir, opts.port).await?;
             },
         },
     }
