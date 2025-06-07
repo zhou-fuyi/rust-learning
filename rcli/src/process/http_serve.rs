@@ -12,10 +12,18 @@ pub async  fn process_http_serve(path: PathBuf, port: u16) -> anyhow::Result<()>
     let addr = SocketAddr::from(([0, 0, 0, 0], port));
     info!("Serving directory '{:?}' on port {}", path, port);
 
-    let state = HttpServerState { path };
+    let state = HttpServerState { path : path.clone() };
+
+    let serve_dir = tower_http::services::ServeDir::new(path)
+        .append_index_html_on_directories(true)
+        .precompressed_gzip()
+        .precompressed_deflate()
+        .precompressed_zstd();
+        // .fallback(tower_http::services::ServeFile::new("404.html"));
 
     let router = Router::new()
-        .route("/{*subpath}", get(file_handler))
+        // .route("/{*subpath}", get(file_handler))
+        .fallback_service(serve_dir)
         .with_state(Arc::new(state));
 
     let listener = tokio::net::TcpListener::bind(addr).await?;

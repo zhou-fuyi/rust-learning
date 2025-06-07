@@ -1,3 +1,8 @@
 ### Test index page
 
 GET http://localhost:8080/README.md
+
+
+### Test page with tower-http
+
+GET http://localhost:8080/README.md

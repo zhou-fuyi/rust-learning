@@ -32,6 +32,9 @@ cargo generate 是一个用于生成项目模板的工具。它可以使用已�
 
 ```bash
 cargo install cargo-generate
+
+# 需要先安装环境
+# sudo apt install build-essential pkg-config libssl-dev
 ```
 
 在我们的课程中，新的项目会使用 `tyr-rust-bootcamp/template` 模版生成基本的代码：
